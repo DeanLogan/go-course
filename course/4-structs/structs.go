@@ -18,6 +18,16 @@ type messageRecieced struct {
 	sentFrom string
 }
 
+type rect struct {
+	width int
+	height int
+}
+
+// area has a receiver of (r rect)
+func (r rect) area() int {
+	return r.width * r.height
+}
+
 func test(m messageToSend) {
 	fmt.Printf("Sending message: '%s' to: %v who is %s %s\n", m.message, m.phoneNumber, m.user.firstName, m.user.lastName)
 	fmt.Println("====================================")
@@ -49,4 +59,11 @@ func main() {
 		sentFrom: "Tony Stark",
 	}
 	fmt.Printf("Recieving message: '%s' to: %v who is %s %s from %s \n", messageR.message, messageR.phoneNumber, messageR.user.firstName, messageR.user.lastName, messageR.sentFrom)
+	fmt.Println("")
+	r := rect{
+		width: 5,
+		height: 10,
+	}
+	
+	fmt.Println(r.area())
 }
