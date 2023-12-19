@@ -13,8 +13,6 @@ type message interface {
 	getMessage() string
 }
 
-// don't edit below this line
-
 type birthdayMessage struct {
 	birthdayTime  time.Time
 	recipientName string
