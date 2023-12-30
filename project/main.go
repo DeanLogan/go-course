@@ -27,7 +27,7 @@ func main(){
 		log.Fatal("PORT is not found in the environment")
 	}
 	
-	dbURL := os.Getenv("DB_IRL") // gets value from env using the key
+	dbURL := os.Getenv("DB_URL") // gets value from env using the key
 	if dbURL == "" {
 		log.Fatal("DB_URL is not found in the environment")
 	}
@@ -59,6 +59,7 @@ func main(){
 	v1Router.Get("/healthz", handlerReadiness) // scopes the handler to only "fire" on GET requests
 	v1Router.Get("/err",handleErr)
 	v1Router.Post("/users", apiCfg.handlerUsersCreate)
+	v1Router.Get("/users", apiCfg.handlerGetUser)
 	router.Mount("/v1", v1Router)
 	
 	srv := &http.Server{
