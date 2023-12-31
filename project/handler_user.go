@@ -3,8 +3,9 @@ package main
 import (
 	"encoding/json"
 	"net/http"
+	_"strconv"
 	"time"
-	
+
 	"github.com/DeanLogan/go-course/project/internal/database"
 	"github.com/google/uuid"
 )
@@ -37,4 +38,24 @@ func (apiConfig *apiConfig) handlerUsersCreate(w http.ResponseWriter, r *http.Re
 
 func (apiConfig *apiConfig) handlerGetUser(w http.ResponseWriter, r *http.Request, user database.User) {
 	respondWithJSON(w, http.StatusOK, databaseUserToUser(user))
+}
+
+func (apiConfig *apiConfig) handlerGetPostsForUser(w http.ResponseWriter, r *http.Request, user database.User) {
+	// limitStr := r.URL.Query().Get("limit")
+	// limit := 10
+	// if specifiedLimit, err := strconv.Atoi(limitStr); err == nil {
+	// 	limit = specifiedLimit
+	// }
+	
+	posts, err := apiConfig.DB.GetPostsForUser(r.Context(), database.GetPostsForUserParams{
+		UserID: user.ID,
+		Limit:  10,
+		//Limit:  int32(limit),
+	})
+	if err != nil {
+		respondWithErr(w, http.StatusInternalServerError, "Couldn't get posts for user")
+		return
+	}
+	
+	respondWithJSON(w, http.StatusOK, databasePostsToPosts(posts))
 }
