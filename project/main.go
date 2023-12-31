@@ -2,10 +2,10 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/DeanLogan/go-course/project/internal/database"
 	"github.com/go-chi/chi"
@@ -33,15 +33,14 @@ func main(){
 	}
 	
 	
-	conn, err := sql.Open("postgres", dbURL)
+	db, err := sql.Open("postgres", dbURL)
 	if err != nil {
-		log.Fatal("Can't connect to database",err)
+		log.Fatal(err)
 	}
-	
-	queries := database.New(conn)
+	dbQueries := database.New(db)
 	
 	apiCfg := apiConfig{
-		DB: queries,
+		DB: dbQueries,
 	}
 	
 	router := chi.NewRouter()
@@ -77,11 +76,10 @@ func main(){
 		Addr:    ":" + portString,
 	}
 	
-	log.Printf("Server starting on port %v", portString)
-	err = srv.ListenAndServe()
-	if err != nil {
-		log.Fatal(err)
-	}
+	const collectionConcurrency = 10
+	const collectionInterval = time.Minute
+	go startScraping(dbQueries, collectionConcurrency, collectionInterval)
 	
-	fmt.Println("Port:", portString)
+	log.Printf("Serving on port: %s\n", portString)
+	log.Fatal(srv.ListenAndServe())
 }
