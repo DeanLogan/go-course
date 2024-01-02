@@ -18,7 +18,7 @@ The course is divided into different chapters within the [YT video](https://www.
 
 # Project: RSS Feed Aggregator
 
-The project is a RSS feed aggregator, it . It's a web server that allows clients to:
+The project is a RSS feed aggregator. It's a web server that allows clients to:
 
 - Add RSS feeds to be collected
 - Follow and unfollow RSS feeds that other users have added
@@ -26,16 +26,16 @@ The project is a RSS feed aggregator, it . It's a web server that allows clients
 
 RSS feeds are a way for websites to publish updates to their content. You can use this project to keep up with your favorite blogs, news sites, podcasts, and more!
 
-# Getting Started
+## Getting Started
 
 To get started with this project, clone the repository and navigate to the project directory.
 
-## Prerequisites
+### Prerequisites
 
 - Go 1.21.5 or later
 - PostgreSQL database
 
-## Environment Variables
+### Environment Variables
 
 The project requires the following environment variables:
 
@@ -44,7 +44,7 @@ The project requires the following environment variables:
 
 You can set these in a `.env` file at the root of the project directory.
 
-# Project Structure
+### Project Structure
 
 The project is organized into several Go files, each responsible for a specific part of the functionality:
 
